@@ -33,4 +33,12 @@ export const theme = {
     lg: 16,
     full: 9999,
   },
+
+  fonts: {
+    title: 'Montserrat-Bold',
+    body: 'Montserrat-Regular',
+    subtitle: 'Montserrat-SemiBold',
+    light: 'Montserrat-Light',
+    extraLight: 'Montserrat-ExtraLight',
+  },
 }
