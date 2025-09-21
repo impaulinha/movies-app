@@ -1,4 +1,5 @@
 import { getPopularMovies, searchMovies } from '../../services/movies'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { MovieItemLine } from '../../components/MovieItemLine'
 import { SearchInput } from '../../components/SearchInput'
 import { View, Text, FlatList } from 'react-native'
@@ -8,6 +9,8 @@ import { Movie } from '../../types/movie'
 import { styles } from './styles'
 
 export function Search() {
+  const insets = useSafeAreaInsets()
+
   const [recommendations, setRecommendations] = useState<Movie[]>([])
   const [searchMovie, setSearchMovie] = useState('')
   const [searchResults, setSearchResults] = useState<Movie[]>([])
@@ -39,7 +42,7 @@ export function Search() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, paddingTop: insets.top + 5 }}>
       <SearchInput value={searchMovie} onSearchChange={setSearchMovie} />
       <Text style={styles.title}>{listTitle}</Text>
       <FlatList

@@ -1,14 +1,17 @@
-import { useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSavedMovies } from '../../contexts/SavedMoviesContext'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { MovieCard } from '../../components/MovieCard'
 import Icon from 'react-native-vector-icons/Feather'
 import { styles } from './styles'
+import { useState } from 'react'
 
 type ActiveList = 'watchlist' | 'watched'
 
 export function Saved() {
+  const insets = useSafeAreaInsets()
+
   const [activeList, setActiveList] = useState<ActiveList>('watchlist')
   const { watchlist, watched, removeFromWatchlist, removeFromWatched } =
     useSavedMovies()
@@ -37,7 +40,7 @@ export function Saved() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={{ ...styles.container, paddingTop: insets.top + 5 }}>
       <Text style={styles.title}>Minha Lista</Text>
 
       {/* Abas para alternar entre as listas */}
@@ -93,6 +96,6 @@ export function Saved() {
           </View>
         )}
       />
-    </SafeAreaView>
+    </View>
   )
 }

@@ -7,7 +7,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <SavedMoviesProvider>
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" />
+        <StatusBar barStyle="light-content" backgroundColor="transparent" />
         <Routes />
       </SavedMoviesProvider>
     </SafeAreaProvider>

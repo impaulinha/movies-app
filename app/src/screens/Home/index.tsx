@@ -10,8 +10,11 @@ import {
 } from '../../services/movies'
 import { MovieList } from '../../components/MovieList'
 import { HeroCard } from '../../components/HeroCard'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export function Home() {
+  const insets = useSafeAreaInsets()
+
   const [heroMovies, setHeroMovies] = useState<Movie[]>([])
   const [popularMovies, setPopularMovies] = useState<Movie[]>([])
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
@@ -46,7 +49,7 @@ export function Home() {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={{ ...styles.container, paddingTop: insets.top + 5 }}>
       <View>
         <Text style={styles.heroTitle}>Top 3 populares</Text>
         <FlatList

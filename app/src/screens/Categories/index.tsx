@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, FlatList, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { SearchInput } from '../../components/SearchInput'
 import { getCategories } from '../../services/categories'
 import { Divider } from '../../components/Divider'
@@ -7,6 +8,8 @@ import { useState, useEffect } from 'react'
 import { styles } from './styles'
 
 export function Categories() {
+  const insets = useSafeAreaInsets()
+
   const [categories, setCategories] = useState<Category[]>([])
   const [search, setSearch] = useState('')
 
@@ -31,8 +34,8 @@ export function Categories() {
   }
 
   return (
-    <View style={styles.container}>
-      <SearchInput onSearchChange={setSearch} />
+    <View style={{ ...styles.container, paddingTop: insets.top + 5 }}>
+      <SearchInput value={search} onSearchChange={setSearch} />
       <FlatList
         data={filterCategories()}
         keyExtractor={(item) => item.id.toString()}
