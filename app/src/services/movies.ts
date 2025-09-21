@@ -28,3 +28,33 @@ export async function searchMovies(query: string): Promise<Movie[]> {
     return []
   }
 }
+
+export async function getTopRatedMovies(): Promise<Movie[]> {
+  try {
+    const response = await api.get<MoviesResponse>('/movie/top_rated')
+    return response.data.results
+  } catch (error) {
+    console.error('Erro ao buscar filmes mais bem avaliados:', error)
+    return []
+  }
+}
+
+export async function getNowPlayingMovies(): Promise<Movie[]> {
+  try {
+    const response = await api.get<MoviesResponse>('/movie/now_playing')
+    return response.data.results
+  } catch (error) {
+    console.error('Erro ao buscar filmes em cartaz:', error)
+    return []
+  }
+}
+
+export async function getUpcomingMovies(): Promise<Movie[]> {
+  try {
+    const response = await api.get<MoviesResponse>('/movie/upcoming')
+    return response.data.results
+  } catch (error) {
+    console.error('Erro ao buscar próximos lançamentos:', error)
+    return []
+  }
+}
