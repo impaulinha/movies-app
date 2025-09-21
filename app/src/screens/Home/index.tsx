@@ -11,6 +11,11 @@ import {
 import { MovieList } from '../../components/MovieList'
 import { HeroCard } from '../../components/HeroCard'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native'
+import { StackParamList } from 'src/routes/stack.routes'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+type NavigationProp = StackNavigationProp<StackParamList, 'MovieDetails'>
 
 export function Home() {
   const insets = useSafeAreaInsets()
@@ -20,6 +25,8 @@ export function Home() {
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
   const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([])
   const [nowPlaying, setNowPlaying] = useState<Movie[]>([])
+
+  const navigation = useNavigation<NavigationProp>()
 
   async function loadData() {
     try {
@@ -45,7 +52,9 @@ export function Home() {
   }, [])
 
   function handleMoviePress(movie: Movie) {
-    console.log('Filme Pressionado:', movie.title)
+    navigation.navigate('MovieDetails', {
+      movieId: movie.id,
+    })
   }
 
   return (

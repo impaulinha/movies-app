@@ -4,11 +4,20 @@ import { styles } from './styles'
 import { theme } from '../../global/theme'
 import { Movie } from '../../types/movie'
 
-export function MovieItemLine({ movie }: { movie: Movie }) {
+type MovieItemLineProps = {
+  movie: Movie
+  onPress: () => void
+}
+
+export function MovieItemLine({ movie, onPress }: MovieItemLineProps) {
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
 
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.8}
+      onPress={onPress}
+    >
       <View style={styles.align}>
         <Image source={{ uri: imageUrl }} style={styles.movieImage} />
         <Text style={styles.text} numberOfLines={2}>

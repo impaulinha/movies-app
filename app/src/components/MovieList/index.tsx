@@ -30,7 +30,9 @@ export function MovieList({
       <FlatList
         data={moviesToShow}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <MovieCard movie={item} />}
+        renderItem={({ item }) => (
+          <MovieCard movie={item} onPress={() => onMoviePress?.(item)} />
+        )}
         horizontal
         showsHorizontalScrollIndicator={false}
       />

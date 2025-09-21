@@ -1,4 +1,4 @@
-import { Movie } from '../types/movie'
+import { Movie, MovieDetails } from '../types/movie'
 import { api } from './api'
 
 interface MoviesResponse {
@@ -56,5 +56,17 @@ export async function getUpcomingMovies(): Promise<Movie[]> {
   } catch (error) {
     console.error('Erro ao buscar próximos lançamentos:', error)
     return []
+  }
+}
+
+export async function getMovieDetails(
+  movieId: number,
+): Promise<MovieDetails | null> {
+  try {
+    const response = await api.get<MovieDetails>(`/movie/${movieId}`)
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar detalhes do filme:', error)
+    return null
   }
 }

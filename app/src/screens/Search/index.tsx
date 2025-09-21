@@ -1,15 +1,21 @@
 import { getPopularMovies, searchMovies } from '../../services/movies'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { MovieItemLine } from '../../components/MovieItemLine'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { SearchInput } from '../../components/SearchInput'
+import { StackParamList } from '../../routes/stack.routes'
+import { useNavigation } from '@react-navigation/native'
 import { View, Text, FlatList } from 'react-native'
 import { Divider } from '../../components/Divider'
 import { useEffect, useState } from 'react'
 import { Movie } from '../../types/movie'
 import { styles } from './styles'
 
+type NavigationProp = StackNavigationProp<StackParamList, 'MovieDetails'>
+
 export function Search() {
   const insets = useSafeAreaInsets()
+  const navigation = useNavigation<NavigationProp>()
 
   const [recommendations, setRecommendations] = useState<Movie[]>([])
   const [searchMovie, setSearchMovie] = useState('')
@@ -48,7 +54,14 @@ export function Search() {
       <FlatList
         data={dataToDisplay}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <MovieItemLine movie={item} />}
+        renderItem={({ item }) => (
+          <MovieItemLine
+            movie={item}
+            onPress={() =>
+              navigation.navigate('MovieDetails', { movieId: item.id })
+            }
+          />
+        )}
         ItemSeparatorComponent={Divider}
         ListEmptyComponent={
           <Text style={styles.empty}>Nenhum filme encontrado.</Text>
