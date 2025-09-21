@@ -42,4 +42,18 @@ export const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   loader: {},
+  iconsBtn: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: theme.radius.full,
+    padding: theme.spacing.sm,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  topBtns: {
+    position: 'absolute',
+    right: theme.spacing.md,
+    flexDirection: 'row',
+    top: theme.spacing.md,
+    gap: theme.spacing.sm,
+  },
 })
