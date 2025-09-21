@@ -1,4 +1,4 @@
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Text, FlatList } from 'react-native'
 import { styles } from './styles'
 import { useEffect, useState } from 'react'
 import { Movie } from '../../types/movie'
@@ -9,8 +9,10 @@ import {
   getNowPlayingMovies,
 } from '../../services/movies'
 import { MovieList } from '../../components/MovieList'
+import { HeroCard } from '../../components/HeroCard'
 
 export function Home() {
+  const [heroMovies, setHeroMovies] = useState<Movie[]>([])
   const [popularMovies, setPopularMovies] = useState<Movie[]>([])
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
   const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([])
@@ -25,6 +27,7 @@ export function Home() {
         getNowPlayingMovies(),
       ])
 
+      setHeroMovies(popular.slice(0, 3))
       setPopularMovies(popular)
       setTopRatedMovies(topRated)
       setUpcomingMovies(upcoming)
@@ -44,6 +47,25 @@ export function Home() {
 
   return (
     <ScrollView style={styles.container}>
+      <View>
+        <Text style={styles.heroTitle}>Top 3 populares</Text>
+        <FlatList
+          data={heroMovies}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item, index }) => (
+            <HeroCard
+              movie={item}
+              rank={index + 1}
+              onPress={() => handleMoviePress(item)}
+            />
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          decelerationRate="fast"
+        />
+      </View>
+
       <MovieList
         title="Populares"
         movies={popularMovies}
