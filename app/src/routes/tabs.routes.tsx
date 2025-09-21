@@ -28,6 +28,7 @@ export function TabRoutes() {
         component={Home}
         options={{
           headerShown: false,
+          title: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
           ),
@@ -38,6 +39,7 @@ export function TabRoutes() {
         component={Search}
         options={{
           headerShown: false,
+          title: 'Pesquisar',
           tabBarIcon: ({ color, size }) => (
             <Icon name="search" color={color} size={size} />
           ),
@@ -48,6 +50,7 @@ export function TabRoutes() {
         component={Categories}
         options={{
           headerShown: false,
+          title: 'Categorias',
           tabBarIcon: ({ color, size }) => (
             <Icon name="menu" color={color} size={size} />
           ),
@@ -58,8 +61,9 @@ export function TabRoutes() {
         component={Saved}
         options={{
           headerShown: false,
+          title: 'Salvos',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="heart" color={color} size={size} />
+            <Icon name="bookmark" color={color} size={size} />
           ),
         }}
       />
