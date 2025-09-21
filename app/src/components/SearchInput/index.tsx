@@ -4,10 +4,11 @@ import { theme } from '../../global/theme'
 import { styles } from './styles'
 
 type SearchProps = {
+  value: string
   onSearchChange: (text: string) => void
 }
 
-export function SearchInput({ onSearchChange }: SearchProps) {
+export function SearchInput({ value, onSearchChange }: SearchProps) {
   function handleSearchChange(text: string) {
     onSearchChange(text)
   }
@@ -21,6 +22,7 @@ export function SearchInput({ onSearchChange }: SearchProps) {
         placeholderTextColor={theme.colors.textPrimary}
         maxLength={60}
         onChangeText={handleSearchChange}
+        value={value}
       />
     </View>
   )
