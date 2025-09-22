@@ -37,7 +37,7 @@ export function Saved() {
               activeList === 'watchlist' && styles.activeTabText,
             ]}
           >
-            Quero Assistir
+            Quero assistir
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -51,7 +51,7 @@ export function Saved() {
               activeList === 'watched' && styles.activeTabText,
             ]}
           >
-            Já Assisti
+            Já assisti
           </Text>
         </TouchableOpacity>
       </View>
