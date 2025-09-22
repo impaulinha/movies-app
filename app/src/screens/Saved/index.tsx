@@ -1,53 +1,35 @@
-import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSavedMovies } from '../../contexts/SavedMoviesContext'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { StackParamList } from '../../routes/stack.routes'
+import { useNavigation } from '@react-navigation/native'
 import { MovieCard } from '../../components/MovieCard'
 import Icon from 'react-native-vector-icons/Feather'
+import { Divider } from '../../components/Divider'
 import { styles } from './styles'
 import { useState } from 'react'
 
 type ActiveList = 'watchlist' | 'watched'
+type NavigationProp = StackNavigationProp<StackParamList, 'MovieDetails'>
 
 export function Saved() {
   const insets = useSafeAreaInsets()
+  const navigation = useNavigation<NavigationProp>()
 
   const [activeList, setActiveList] = useState<ActiveList>('watchlist')
-  const { watchlist, watched, removeFromWatchlist, removeFromWatched } =
-    useSavedMovies()
-
+  const { watchlist, watched } = useSavedMovies()
   const dataToDisplay = activeList === 'watchlist' ? watchlist : watched
-
-  function handleRemovePress(movieId: number, movieTitle: string) {
-    Alert.alert(
-      'Remover Filme',
-      `Tem certeza que deseja remover "${movieTitle}" da sua lista?`,
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Remover',
-          style: 'destructive',
-          onPress: () => {
-            if (activeList === 'watchlist') {
-              removeFromWatchlist(movieId)
-            } else {
-              removeFromWatched(movieId)
-            }
-          },
-        },
-      ],
-    )
-  }
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top + 5 }}>
       <Text style={styles.title}>Minha Lista</Text>
-
-      {/* Abas para alternar entre as listas */}
-      <View style={styles.tabsContainer}>
+      <Divider />
+      <View style={styles.optionsTab}>
         <TouchableOpacity
           style={[styles.tab, activeList === 'watchlist' && styles.activeTab]}
           onPress={() => setActiveList('watchlist')}
+          activeOpacity={0.8}
         >
           <Text
             style={[
@@ -61,6 +43,7 @@ export function Saved() {
         <TouchableOpacity
           style={[styles.tab, activeList === 'watched' && styles.activeTab]}
           onPress={() => setActiveList('watched')}
+          activeOpacity={0.8}
         >
           <Text
             style={[
@@ -77,14 +60,14 @@ export function Saved() {
         data={dataToDisplay}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          // Usando um wrapper para o botão de remover
-          <TouchableOpacity
-            onLongPress={() => handleRemovePress(item.id, item.title)} // Segurar para remover
-          >
-            <MovieCard movie={item} />
-          </TouchableOpacity>
+          <MovieCard
+            movie={item}
+            onPress={() =>
+              navigation.navigate('MovieDetails', { movieId: item.id })
+            }
+          />
         )}
-        numColumns={3}
+        numColumns={2}
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>

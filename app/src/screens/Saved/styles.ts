@@ -5,42 +5,43 @@ import { theme } from '../../global/theme'
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#141414',
+    backgroundColor: theme.colors.background,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    marginBottom: 20,
+    fontSize: theme.fontSize.xl,
+    fontFamily: theme.fonts.title,
+    color: theme.colors.textPrimary,
+    marginHorizontal: theme.spacing.lg,
+    marginVertical: theme.spacing.md,
   },
-  tabsContainer: {
+  optionsTab: {
     flexDirection: 'row',
-    marginHorizontal: 16,
-    marginBottom: 20,
-    backgroundColor: '#333',
-    borderRadius: 10,
+    marginHorizontal: theme.spacing.md,
+    backgroundColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    marginVertical: theme.spacing.lg,
   },
   tab: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: theme.spacing.md,
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: theme.radius.md,
   },
   activeTab: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.secondary,
   },
   tabText: {
-    color: '#fff',
-    fontWeight: '600',
+    color: theme.colors.textPrimary,
+    fontFamily: theme.fonts.subtitle,
+    fontSize: theme.fontSize.md,
   },
   activeTabText: {
-    color: '#000',
+    color: theme.colors.border,
   },
   listContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 20,
+    paddingHorizontal: theme.spacing.md,
+    paddingBottom: theme.spacing.lg,
+    gap: theme.spacing.md,
   },
   emptyContainer: {
     flex: 1,
