@@ -7,6 +7,7 @@ import { getCategories } from '../../services/categories'
 import { useNavigation } from '@react-navigation/native'
 import { Divider } from '../../components/Divider'
 import { Category } from '../../types/category'
+import { Load } from '../../components/Load'
 import { useState, useEffect } from 'react'
 import { styles } from './styles'
 
@@ -18,6 +19,7 @@ export function Categories() {
 
   const [categories, setCategories] = useState<Category[]>([])
   const [search, setSearch] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     loadCategories()
@@ -29,6 +31,8 @@ export function Categories() {
       setCategories(data)
     } catch (error) {
       console.error('Falha ao buscar categorias:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -36,6 +40,10 @@ export function Categories() {
     return categories.filter((item) =>
       item.name.toLowerCase().includes(search.toLowerCase()),
     )
+  }
+
+  if (isLoading) {
+    return <Load />
   }
 
   return (
@@ -59,6 +67,7 @@ export function Categories() {
           </TouchableOpacity>
         )}
         ItemSeparatorComponent={Divider}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 50 }}
       />
     </View>
   )

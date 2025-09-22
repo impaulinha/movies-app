@@ -3,7 +3,6 @@ import {
   Text,
   ScrollView,
   ImageBackground,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native'
 import { styles } from './styles'
@@ -16,6 +15,7 @@ import { getMovieDetails } from '../../services/movies'
 import Icon from 'react-native-vector-icons/Feather'
 import { Button } from '../../components/Button'
 import { MovieById } from '../../types/movie'
+import { Load } from '../../components/Load'
 import { useEffect, useState } from 'react'
 import { Tag } from '../../components/Tag'
 import { theme } from '../../global/theme'
@@ -34,8 +34,6 @@ export function MovieDetails() {
     ? movie.release_date.substring(0, 4)
     : 'N/A'
   const {
-    watchlist,
-    watched,
     addToWatched,
     addToWatchlist,
     isMovieInWatched,
@@ -88,7 +86,7 @@ export function MovieDetails() {
   }
 
   if (isLoading || !movie) {
-    return <ActivityIndicator size="large" color="#fff" style={styles.loader} />
+    return <Load />
   }
 
   return (

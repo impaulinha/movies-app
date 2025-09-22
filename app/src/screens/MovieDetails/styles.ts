@@ -41,7 +41,6 @@ export const styles = StyleSheet.create({
     margin: theme.spacing.md,
     alignSelf: 'flex-start',
   },
-  loader: {},
   iconsBtn: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     borderRadius: theme.radius.full,

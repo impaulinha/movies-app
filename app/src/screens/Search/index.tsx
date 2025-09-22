@@ -7,6 +7,7 @@ import { StackParamList } from '../../routes/stack.routes'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, FlatList } from 'react-native'
 import { Divider } from '../../components/Divider'
+import { Load } from '../../components/Load'
 import { useEffect, useState } from 'react'
 import { Movie } from '../../types/movie'
 import { styles } from './styles'
@@ -20,6 +21,7 @@ export function Search() {
   const [recommendations, setRecommendations] = useState<Movie[]>([])
   const [searchMovie, setSearchMovie] = useState('')
   const [searchResults, setSearchResults] = useState<Movie[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const listTitle =
     searchMovie.length > 2 ? 'Resultados da busca' : 'Recomendações'
@@ -45,6 +47,11 @@ export function Search() {
   async function loadRecommendations() {
     const movies = await getPopularMovies()
     setRecommendations(movies)
+    setIsLoading(false)
+  }
+
+  if (isLoading) {
+    return <Load />
   }
 
   return (
@@ -66,6 +73,7 @@ export function Search() {
         ListEmptyComponent={
           <Text style={styles.empty}>Nenhum filme encontrado.</Text>
         }
+        contentContainerStyle={{ paddingBottom: insets.bottom + 50 }}
       />
     </View>
   )

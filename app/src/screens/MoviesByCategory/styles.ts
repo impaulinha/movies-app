@@ -18,5 +18,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: theme.spacing.md,
     marginVertical: theme.spacing.sm,
   },
-  header: {},
+  back: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 })

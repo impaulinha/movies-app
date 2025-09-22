@@ -68,7 +68,10 @@ export function Saved() {
           />
         )}
         numColumns={2}
-        contentContainerStyle={styles.listContent}
+        contentContainerStyle={{
+          ...styles.listContent,
+          paddingBottom: insets.bottom + 50,
+        }}
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>
             <Icon name="film" size={40} color="#555" />

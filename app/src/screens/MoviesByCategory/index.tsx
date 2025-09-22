@@ -1,15 +1,18 @@
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { SearchInput } from '../../components/SearchInput'
 import { StackParamList } from '../../routes/stack.routes'
 import { getMoviesByGenre } from '../../services/movies'
 import { MovieCard } from '../../components/MovieCard'
-import { View, Text, FlatList } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather'
 import { Divider } from '../../components/Divider'
+import { Load } from '../../components/Load'
 import { useEffect, useState } from 'react'
+import { theme } from '../../global/theme'
 import { Movie } from '../../types/movie'
 import { styles } from './styles'
-import { StackNavigationProp } from '@react-navigation/stack'
 
 type NavigationRouteProps = RouteProp<StackParamList, 'MoviesByCategory'>
 type NavigationProps = StackNavigationProp<StackParamList, 'MoviesByCategory'>
@@ -22,6 +25,7 @@ export function MoviesByCategory() {
 
   const [movies, setMovies] = useState<Movie[]>([])
   const [searchMovie, setSearchMovie] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     loadMoviesByCategory()
@@ -33,6 +37,8 @@ export function MoviesByCategory() {
       setMovies(response)
     } catch (error) {
       console.log('Erro ao carregar filmes por categoria: ', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -40,6 +46,10 @@ export function MoviesByCategory() {
     return movies.filter((item) =>
       item.title.toLowerCase().includes(searchMovie.toLowerCase()),
     )
+  }
+
+  if (isLoading) {
+    return <Load />
   }
 
   return (
@@ -56,11 +66,25 @@ export function MoviesByCategory() {
       )}
       numColumns={2}
       style={{ ...styles.container, paddingTop: insets.top + 5 }}
-      contentContainerStyle={styles.flatlistContainer}
+      contentContainerStyle={{
+        ...styles.flatlistContainer,
+        paddingBottom: insets.bottom + 50,
+      }}
       ListHeaderComponent={
-        <View style={styles.header}>
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.back}
+            onPress={() => navigation.goBack()}
+          >
+            <Icon
+              name="arrow-left"
+              color={theme.colors.textPrimary}
+              size={theme.fontSize.xxl}
+            />
+            <Text style={styles.category}>{categoryName}</Text>
+          </TouchableOpacity>
           <SearchInput value={searchMovie} onSearchChange={setSearchMovie} />
-          <Text style={styles.category}>{categoryName}</Text>
           <Divider />
         </View>
       }

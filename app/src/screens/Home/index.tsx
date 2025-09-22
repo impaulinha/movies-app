@@ -1,19 +1,20 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { View, ScrollView, Text, FlatList } from 'react-native'
-import { styles } from './styles'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/native'
+import { StackParamList } from 'src/routes/stack.routes'
+import { MovieList } from '../../components/MovieList'
+import { HeroCard } from '../../components/HeroCard'
+import { Load } from '../../components/Load'
 import { useEffect, useState } from 'react'
 import { Movie } from '../../types/movie'
+import { styles } from './styles'
 import {
   getPopularMovies,
   getTopRatedMovies,
   getUpcomingMovies,
   getNowPlayingMovies,
 } from '../../services/movies'
-import { MovieList } from '../../components/MovieList'
-import { HeroCard } from '../../components/HeroCard'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native'
-import { StackParamList } from 'src/routes/stack.routes'
-import { StackNavigationProp } from '@react-navigation/stack'
 
 type NavigationProp = StackNavigationProp<StackParamList, 'MovieDetails'>
 
@@ -25,6 +26,7 @@ export function Home() {
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([])
   const [upcomingMovies, setUpcomingMovies] = useState<Movie[]>([])
   const [nowPlaying, setNowPlaying] = useState<Movie[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const navigation = useNavigation<NavigationProp>()
 
@@ -44,6 +46,8 @@ export function Home() {
       setNowPlaying(nowPlaying)
     } catch (error) {
       console.error('Erro ao carregar dados da Home:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -57,8 +61,18 @@ export function Home() {
     })
   }
 
+  if (isLoading) {
+    return <Load />
+  }
+
   return (
-    <ScrollView style={{ ...styles.container, paddingTop: insets.top + 5 }}>
+    <ScrollView
+      style={{
+        ...styles.container,
+        paddingTop: insets.top + 5,
+      }}
+      contentContainerStyle={{ paddingBottom: insets.bottom + 90 }}
+    >
       <View>
         <Text style={styles.heroTitle}>Top 3 populares</Text>
         <FlatList
