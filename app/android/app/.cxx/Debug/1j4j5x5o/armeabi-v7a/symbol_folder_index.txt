@@ -1,0 +1,1 @@
+C:\movies-app\app\android\app\build\intermediates\cxx\Debug\1j4j5x5o\obj\armeabi-v7a
