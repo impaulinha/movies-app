@@ -1,4 +1,4 @@
-import { Movie, MovieDetails } from '../types/movie'
+import { Movie, MovieById } from '../types/movie'
 import { api } from './api'
 
 interface MoviesResponse {
@@ -61,12 +61,26 @@ export async function getUpcomingMovies(): Promise<Movie[]> {
 
 export async function getMovieDetails(
   movieId: number,
-): Promise<MovieDetails | null> {
+): Promise<MovieById | null> {
   try {
-    const response = await api.get<MovieDetails>(`/movie/${movieId}`)
+    const response = await api.get<MovieById>(`/movie/${movieId}`)
     return response.data
   } catch (error) {
     console.error('Erro ao buscar detalhes do filme:', error)
     return null
+  }
+}
+
+export async function getMoviesByGenre(genreId: number): Promise<Movie[]> {
+  try {
+    const response = await api.get<MoviesResponse>('/discover/movie', {
+      params: {
+        with_genres: genreId,
+      },
+    })
+    return response.data.results
+  } catch (error) {
+    console.error(`Erro ao buscar filmes do gênero ${genreId}:`, error)
+    return []
   }
 }
